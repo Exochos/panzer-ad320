@@ -14,7 +14,7 @@ const register = async (req, res) => {
   }
 
   try {
-    const existingUser = await User.findOne({ email: req.body.email.toLowercase() })
+    const existingUser = await User.findOne({ email: req.body.email.toLowerCase() })
     console.log(`Existing user ${existingUser}`)
     if (existingUser) {
       res.status(400).send('That email is already registered')
@@ -41,9 +41,8 @@ async function login(req, res) {
   }
 
   const creds = req.body
-
   try {
-    const existingUser = await User.findOne({ email: creds.email.toLowercase() })
+    const existingUser = await User.findOne({ email: creds.email })
 
     if (!existingUser) {
       res.status(404).send('No user found')

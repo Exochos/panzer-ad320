@@ -10,13 +10,18 @@ const sleepAndQuit = new Promise((resolve) => {
   setTimeout(() => {
     mongoose.connection.close()
     resolve()
-  }, 5000)
+  }, 50000)
 })
 
 const initDB = async () => {
-  const connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@crit-cluster.bpw1p.mongodb.net/notoriety?retryWrites=true&w=majority`
+  const connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.bgjij.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
   try {
-    await mongoose.connect(connectionString)
+    mongoose.connect(connectionString, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000
+    })
+    console.log('Connected to the database!')
   } catch (err) {
     console.log('error ', err)
   }
